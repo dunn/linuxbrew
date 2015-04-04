@@ -13,7 +13,8 @@ class GnuTime < Formula
     sha1 "cb53342bb927e6977df940b6ca8517d0a2c845f3" => :mountain_lion
   end
 
-  option "with-default-names", "Do not prepend 'g' to the binary"
+  option "without-default-names", "Prefix binaries with 'g'" if OS.linux?
+  option "with-default-names", "Do not prepend 'g' to the binary" if OS.mac?
 
   # Fixes issue with main returning void rather than int
   # http://trac.macports.org/ticket/32860

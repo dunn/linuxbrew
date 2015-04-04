@@ -4,7 +4,8 @@ class GnuTar < Formula
   mirror "http://ftp.gnu.org/gnu/tar/tar-1.28.tar.gz"
   sha1 "cd30a13bbfefb54b17e039be7c43d2592dd3d5d0"
 
-  option "with-default-names", "Do not prepend 'g' to the binary"
+  option "without-default-names", "Prefix binaries with 'g'" if OS.linux?
+  option "with-default-names", "Do not prepend 'g' to the binary" if OS.mac?
 
   bottle do
     revision 2

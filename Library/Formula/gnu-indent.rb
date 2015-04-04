@@ -6,9 +6,9 @@ class GnuIndent < Formula
 
   depends_on "gettext"
 
+  option "without-default-names", "Prefix binaries with 'g'" if OS.linux?
+  option "with-default-names", "Do not prepend 'g' to the binary" if OS.mac?
   deprecated_option "default-names" => "with-default-names"
-
-  option "with-default-names", "Do not prepend 'g' to the binary"
 
   # Fix broken include and missing build dependency
   patch :DATA

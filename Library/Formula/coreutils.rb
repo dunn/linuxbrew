@@ -13,7 +13,7 @@ class Coreutils < Formula
   end
 
   # --default-names interferes with Mac builds.
-  option "with-default-names", "Do not prepend 'g' to the binary" if OS.linux?
+  option "without-default-names", "Prefix the binary with 'g'" if OS.linux?
   deprecated_option "default-names" => "with-default-names"
 
   conflicts_with "ganglia", :because => "both install `gstat` binaries"
@@ -74,21 +74,21 @@ class Coreutils < Formula
     end
   end
 
-  if build.without? "default-names"
-    def caveats; <<-EOS.undent
-    All commands have been installed with the prefix 'g'.
+  def caveats
+    if build.without? "default-names" then <<-EOS.undent
+      All commands have been installed with the prefix 'g'.
 
-    If you really need to use these commands with their normal names, you
-    can add a "gnubin" directory to your PATH from your bashrc like:
+      If you really need to use these commands with their normal names, you
+      can add a "gnubin" directory to your PATH from your bashrc like:
 
-        PATH="#{opt_libexec}/gnubin:$PATH"
+          PATH="#{opt_libexec}/gnubin:$PATH"
 
-    Additionally, you can access their man pages with normal names if you add
-    the "gnuman" directory to your MANPATH from your bashrc as well:
+      Additionally, you can access their man pages with normal names if you add
+      the "gnuman" directory to your MANPATH from your bashrc as well:
 
-        MANPATH="#{opt_libexec}/gnuman:$MANPATH"
+          MANPATH="#{opt_libexec}/gnuman:$MANPATH"
 
-    EOS
+      EOS
     end
   end
 

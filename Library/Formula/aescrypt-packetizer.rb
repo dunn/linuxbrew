@@ -22,7 +22,8 @@ class AescryptPacketizer < Formula
 
   depends_on :xcode => :build
 
-  option "with-default-names", "Build with the binaries named as expected upstream"
+  option "without-default-names", "Prefix the binaries with 'p'" if OS.linux?
+  option "with-default-names", "Build with the binaries named as expected upstream" if OS.mac?
 
   def install
     if build.head?
@@ -50,11 +51,13 @@ class AescryptPacketizer < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
-    To avoid conflicting with our other AESCrypt package the binaries
-    have been renamed paescrypt and paescrypt_keygen, unless you chose
-    to exercise the default-names option.
-    EOS
+  def caveats
+    if build.without? "default-names" then <<-EOS.undent
+      To avoid conflicting with our other AESCrypt package the binaries
+      have been renamed paescrypt and paescrypt_keygen, unless you chose
+      to exercise the default-names option.
+      EOS
+    end
   end
 
   test do

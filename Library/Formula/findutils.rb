@@ -13,9 +13,9 @@ class Findutils < Formula
     sha1 "60134ccc215dd1216bfb256a1d38dd58c74525de" => :mountain_lion
   end
 
+  option "without-default-names", "Prefix binaries with 'g'" if OS.linux?
+  option "with-default-names", "Do not prepend 'g' to the binary" if OS.mac?
   deprecated_option "default-names" => "with-default-names"
-
-  option "with-default-names", "Do not prepend 'g' to the binary"
 
   def install
     args = ["--prefix=#{prefix}",

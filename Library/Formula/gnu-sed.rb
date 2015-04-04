@@ -14,9 +14,9 @@ class GnuSed < Formula
     sha1 "4dff2a21df4148c95abc04e87544bef1c452951f" => :mountain_lion
   end
 
+  option "without-default-names", "Prefix binaries with 'g'" if OS.linux?
+  option "with-default-names", "Do not prepend 'g' to the binary" if OS.mac?
   deprecated_option "default-names" => "with-default-names"
-
-  option "with-default-names", "Do not prepend 'g' to the binary"
 
   def install
     args = ["--prefix=#{prefix}", "--disable-dependency-tracking"]
@@ -30,23 +30,25 @@ class GnuSed < Formula
     (libexec/"gnuman/man1").install_symlink man1/"gsed.1" => "sed.1"
   end
 
-  def caveats; <<-EOS.undent
-    The command has been installed with the prefix "g".
-    If you do not want the prefix, install using the "with-default-names" option.
+  def caveats
+    if build.without? "default-names" then <<-EOS.undent
+      The command has been installed with the prefix "g".
+      If you do not want the prefix, install using the "with-default-names" option.
 
-    If you need to use these commands with their normal names, you
-    can add a "gnubin" directory to your PATH from your bashrc like:
+      If you need to use these commands with their normal names, you
+      can add a "gnubin" directory to your PATH from your bashrc like:
 
-        PATH="#{opt_libexec}/gnubin:$PATH"
+          PATH="#{opt_libexec}/gnubin:$PATH"
 
-    Additionally, you can access their man pages with normal names if you add
-    the "gnuman" directory to your MANPATH from your bashrc as well:
+      Additionally, you can access their man pages with normal names if you add
+      the "gnuman" directory to your MANPATH from your bashrc as well:
 
-        MANPATH="#{opt_libexec}/gnuman:$MANPATH"
+          MANPATH="#{opt_libexec}/gnuman:$MANPATH"
 
-    EOS
+      EOS
+    end
   end
-
+  
   test do
     system "#{bin}/gsed", "--version"
   end

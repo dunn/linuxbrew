@@ -12,9 +12,9 @@ class GnuUnits < Formula
     sha1 "7d9b3438fbfeaa0d8a428a1ed6496df9d1c92cc6" => :mountain_lion
   end
 
+  option "without-default-names", "Prefix binaries with 'g'" if OS.linux?
+  option "with-default-names", "Do not prepend 'g' to the binary" if OS.mac?
   deprecated_option "default-names" => "with-default-names"
-
-  option "with-default-names", "Do not prepend 'g' to the binary"
 
   def install
     args = ["--prefix=#{prefix}"]

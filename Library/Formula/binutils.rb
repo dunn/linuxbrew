@@ -5,7 +5,7 @@ class Binutils < Formula
   sha1 "f10c64e92d9c72ee428df3feaf349c4ecb2493bd"
 
   # --default-names interferes with Mac builds.
-  option "with-default-names", "Do not prepend 'g' to the binary" if OS.linux?
+  option "without-default-names", "Prefix the binary with 'g'" if OS.linux?
   deprecated_option "default-names" => "with-default-names"
 
   bottle do
