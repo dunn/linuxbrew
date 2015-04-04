@@ -26,8 +26,10 @@ class GnuSed < Formula
     system "./configure", *args
     system "make", "install"
 
-    (libexec/"gnubin").install_symlink bin/"gsed" =>"sed"
-    (libexec/"gnuman/man1").install_symlink man1/"gsed.1" => "sed.1"
+    if build.without? "default-names"
+      (libexec/"gnubin").install_symlink bin/"gsed" => "sed"
+      (libexec/"gnuman/man1").install_symlink man1/"gsed.1" => "sed.1"
+    end
   end
 
   def caveats; <<-EOS.undent
